@@ -154,6 +154,3 @@ local getJobCount = exports[GetCurrentResourceName()]:getJobCount("police")
 
 MIT
 
----
-
-Quitfile Production
