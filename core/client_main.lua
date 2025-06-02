@@ -1,4 +1,6 @@
-ESX = exports["es_extended"]:getSharedObject()
+local ESX = exports["es_extended"]:getSharedObject()
+
+
 
 local jobCountCache = {}
 local clientPhone = nil
@@ -67,3 +69,14 @@ function ClientOnline()
     return onlinePlayers
 end
 exports('ClientOnline', ClientOnline)
+
+Wait(1000) -- รอให้ข้อมูลถูกโหลดก่อน
+local count = exports[GetCurrentResourceName()]:ClientCheckJob("unemployed")
+local phone = exports[GetCurrentResourceName()]:ClientPhone()
+local name = exports[GetCurrentResourceName()]:ClientName()
+local online = exports[GetCurrentResourceName()]:ClientOnline()
+
+print("Unemployed Count: " .. count)
+print("Player Phone: " .. phone)
+print("Player Name: " .. name)
+print("Online Players: " .. online)

@@ -1,4 +1,4 @@
-ESX = exports["es_extended"]:getSharedObject()
+local ESX = exports["es_extended"]:getSharedObject()
 
 local jobStats = {}
 local jobCountCache = {}
@@ -17,20 +17,23 @@ end
 
 -- เมื่อผู้เล่นโหลดเข้ามา
 RegisterNetEvent('esx:playerLoaded')
-AddEventHandler('esx:playerLoaded', function()
+AddEventHandler('esx:playerLoaded', function(source)
     local src = source
     Wait(1000)
     local xPlayer = ESX.GetPlayerFromId(src)
 
-    onlinePlayers = onlinePlayers + 1
+    -- print('playerLoaded', src, ESX.DumpTable(xPlayer))
+    -- print(ESX.DumpTable(source))
 
     if not xPlayer then
         debug(('[DEBUG] Failed to get xPlayer for %s'):format(src))
         return
     end
 
+    onlinePlayers = onlinePlayers + 1
+
     increaseJobCount(xPlayer.job.name)
-  
+
     debug(('[DEBUG] Player Loaded: %s | Job: %s | Online: %s'):format(src, xPlayer.job.name, onlinePlayers))
     updateClientStats(src)
 
@@ -53,9 +56,20 @@ end)
 
 -- เมื่อผู้เล่นออกจากเซิร์ฟเวอร์
 RegisterNetEvent('esx:playerDropped')
-AddEventHandler('esx:playerDropped', function()
+AddEventHandler('esx:playerDropped', function(source)
     local src = source
+
     local xPlayer = ESX.GetPlayerFromId(src)
+
+    -- print('playerDropped', src, ESX.DumpTable(xPlayer))
+    -- print(ESX.DumpTable(source))
+
+
+    if not xPlayer then
+        debug(('[DEBUG] Failed to get xPlayer for %s on drop'):format(src))
+        return
+    end
+
     onlinePlayers = onlinePlayers - 1
 
     decreaseJobCount(xPlayer.job.name)
@@ -167,6 +181,10 @@ end
 
 RegisterCommand('reloadjobstats', function(source, args, rawCommand)
     -- Reset job counts
+    if source ~= 0 then
+        debug('[DEBUG] Command can only be run by server console.')
+        return
+    end
     for _, v in pairs(jobStats) do
         v.count = 0
     end
@@ -182,8 +200,8 @@ RegisterCommand('reloadjobstats', function(source, args, rawCommand)
     debug('[DEBUG] Job stats reloaded by command.')
 end, true)
 
-
-
-
-
 exports('getJobCount', getJobCount)
+
+Wait(2000) -- ให้เวลาเซิร์ฟเวอร์โหลดข้อมูลก่อน
+local count = exports[GetCurrentResourceName()]:getJobCount("unemployed")
+print("Unemployed Count: " .. count)
