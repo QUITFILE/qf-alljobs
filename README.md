@@ -1,4 +1,4 @@
-# QF-AllJobs
+# QF-Allchecks
 
 A FiveM resource for tracking and exporting job statistics, player names, phone numbers, and online player counts using ESX and oxmysql.
 
@@ -23,7 +23,7 @@ A FiveM resource for tracking and exporting job statistics, player names, phone 
 3. เพิ่มใน `server.cfg`:
 
    ```
-   ensure qf-alljobs
+   ensure qf-allchecks
    ```
 
 ### การตั้งค่า
@@ -99,7 +99,7 @@ MIT
 3. Add to your `server.cfg`:
 
    ```
-   ensure qf-alljobs
+   ensure qf-allchecks
    ```
 
 ### Configuration
